@@ -1,3 +1,4 @@
 
 *.ts
 /Api/node_modules
+/Api/upload
