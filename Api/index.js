@@ -23,6 +23,22 @@ app.post('/register', async (req, res) => {
 
 })
 
+
+app.post('/login', async (req, res) => {
+    // console.log(req.body);
+    const { username, password } = req.body;
+    const userDoc = await User.findOne({ username: username });
+    const passOk = bcrypt.compareSync(password, userDoc.password);
+    
+    if(passOk){
+            //logged in
+    }else{
+            res.status(400).json('wrong credentials');
+    }
+})
+
+
+
 app.listen(4000);
 //mongodb+srv://blog:9Nu1nB03zo69rgof@cluster0.sg2s1ub.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 //9Nu1nB03zo69rgof
