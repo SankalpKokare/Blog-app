@@ -8,6 +8,9 @@ const salt = bcrypt.genSaltSync(10);
 const secret = 'sdsfaldskfdsfk4545454sdasd4sa5da5s4';
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const uploadMiddleware = multer({ dest: 'upload/' });
+const fs = require('fs');
 
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
@@ -63,6 +66,14 @@ app.post('/logout', (req, res) => {
     res.cookie('token', '').json('ok');
 })
 
+app.post('/post', uploadMiddleware.single('file'), (req, res) => {
+    const { originalname, path } = req.file;
+    const parts = originalname.split('.');
+    const ext = parts[parts.length - 1];
+    const newPath = path + '.' + ext;
+    fs.renameSync(path, newPath);
+    res.json({ files: req.file });
+})
 
 app.listen(4000);
 //mongodb+srv://blog:9Nu1nB03zo69rgof@cluster0.sg2s1ub.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
