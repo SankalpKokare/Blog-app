@@ -6,18 +6,22 @@ import Post from './Post';
 import IndexPage from './page/IndexPage';
 import LoginPage from './page/LoginPage';
 import RegisterPage from './page/RegisterPage';
+import { UserContextProvider } from './UserContext';
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Layout />} >
-            <Route index element={<IndexPage />} />
-            <Route path='/login' element={<LoginPage />} />
-            <Route path='/Register' element={<RegisterPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <UserContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Layout />} >
+              <Route index element={<IndexPage />} />
+              <Route path='/login' element={<LoginPage />} />
+              <Route path='/Register' element={<RegisterPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserContextProvider>
+
     </>
   );
 }
